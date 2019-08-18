@@ -1,0 +1,18 @@
+steps:
+# Install the client dependencies
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+# Install the function dependencies
+- name: 'gcr.io/cloud-builders/npm'
+  dir: 'functions'
+  args: ['install']
+# Run the unit tests
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'test:unit']
+# Build the client
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'build']
+  env: ['VUE_APP_FIREBASE_API_KEY=${_VUE_APP_FIREBASE_API_KEY}'] # Uses the _VUE_APP_FIREBASE_API_KEY substitute define in cloud build
+# Deploy the client and the functions
+- name: 'gcr.io/$PROJECT_ID/firebase'
+  args: ['deploy', '--debug', '--token', '${_FIREBASE_TOKEN}'] # Uses the _FIREBASE_TOKEN substitute define in cloud build
