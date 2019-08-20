@@ -23,4 +23,4 @@ steps:
   ]
 # Deploy the client and the functions
 - name: 'gcr.io/$PROJECT_ID/firebase'
-  args: ['deploy', '--debug', '--token', '${_FIREBASE_TOKEN}'] # Uses the _FIREBASE_TOKEN substitute define in cloud build
+  args: ['deploy', '--debug'] # Uses the _FIREBASE_TOKEN substitute define in cloud build
